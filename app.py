@@ -21,6 +21,15 @@ def add_task():
     conn.close()
     return redirect(url_for('index'))
 
+# Rota para deletar uma tarefa
+@app.route('/delete/<int:id>', methods=['POST'])
+def delete_task(id):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM tasks WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     create_table()  # Chama a função para criar a tabela
     app.run(debug=True)
